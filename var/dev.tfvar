@@ -1,5 +1,19 @@
-max=2
-min=2
-desired=2
 project="dyl"
-instance_type="t2.medium"
+region = "us-west-2"
+cluster_name = "project-cluster"
+eks_cluster_sub_ids =  [
+      "subnet-0530e9a5a33dc72ea",
+      "subnet-027a3a5c0bea1a5d3",
+      "subnet-0512d0858327bf149"
+    ]
+cluster_role_name = "eks-cluster-role"
+node_role_name = "eks-node-role"
+node_group_subnet_ids =  [
+      "subnet-0530e9a5a33dc72ea",
+      "subnet-027a3a5c0bea1a5d3",
+      "subnet-0512d0858327bf149"
+    ]
+desired_size = 2
+max_size = 2
+min_size = 2
+instance_types = ["t3.medium"]
