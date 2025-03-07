@@ -8,11 +8,18 @@ module "rds" {
 
 module "eks" {
     source = "./modules/eks"
-    project = var.project
-    desired_nodes = var.desired
-    max_nodes = var.max
-    min_nodes = var.min
-    node_instance_type = var.instance_type
+
+  region = var.region
+  cluster_name = var.cluster_name
+  eks_cluster_sub_ids = var.eks_cluster_sub_ids
+  cluster_role_name = var.cluster_role_name
+  node_role_name = var.node_role_name
+  node_group_subnet_ids = var.node_group_subnet_ids
+  desired_size = var.desired_size
+  max_size = var.max_size
+  min_size = var.min_size
+  instance_types = var.instance_types
+  project = var.project
 }
 
 module "s3" {
