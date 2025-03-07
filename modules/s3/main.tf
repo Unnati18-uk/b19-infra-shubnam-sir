@@ -1,17 +1,26 @@
 # Create an S3 bucket
 resource "aws_s3_bucket" "cbz_bucket" {
-  bucket = "fra-frontend-b24" # Replace with a globally unique bucket name
-
-  # Enable static website hosting
-  website {
-    index_document = "index.html"
-    error_document = "error.html"
-  }
+  bucket = "flight-reser-frontend-b33"
 
   tags = {
-    Name        = "StaticWebsiteBucket"
-    env = "dev"
+    Name    = "flight-reser-frontend-b33"
+    Env = "Dev"
   }
+ } 
+
+  # Enable static website hosting
+  resource "aws_s3_bucket_website_configuration" "cbz_website" {
+  bucket = aws_s3_bucket.cbz_website.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
+  }
+   
+
 }
 
 # Disable Block Public Access
