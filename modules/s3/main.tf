@@ -1,16 +1,15 @@
-# Create an S3 bucket
 resource "aws_s3_bucket" "cbz_bucket" {
   bucket = "flight-reser-frontend-b33"
 
   tags = {
-    Name    = "flight-reser-frontend-b33"
-    Env = "Dev"
+    Name = "flight-reser-frontend-b33"
+    Env  = "Dev"
   }
- } 
+}
 
-  # Enable static website hosting
-  resource "aws_s3_bucket_website_configuration" "cbz_website" {
-  bucket = aws_s3_bucket.cbz_website.id
+# Enable static website hosting
+resource "aws_s3_bucket_website_configuration" "cbz_website" {
+  bucket = aws_s3_bucket.cbz_bucket.id  # Corrected reference
 
   index_document {
     suffix = "index.html"
@@ -19,19 +18,18 @@ resource "aws_s3_bucket" "cbz_bucket" {
   error_document {
     key = "error.html"
   }
-   
-
 }
 
 # Disable Block Public Access
 resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.cbz_bucket.bucket
+  bucket = aws_s3_bucket.cbz_bucket.id  # Corrected reference
 
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
+
 # Set the bucket policy to allow public read access (use cautiously)
 resource "aws_s3_bucket_policy" "static_website_policy" {
   bucket = aws_s3_bucket.cbz_bucket.id
@@ -52,6 +50,6 @@ resource "aws_s3_bucket_policy" "static_website_policy" {
 
 # Output the bucket's website endpoint
 output "website_endpoint" {
-  value       = aws_s3_bucket.cbz_bucket.website_endpoint
+  value       = aws_s3_bucket_website_configuration.cbz_website.website_endpoint  # Updated reference
   description = "The URL to access the static website"
 }
